@@ -1,0 +1,5 @@
+<div class="app-container {{= status }}">
+
+  <h1>{{= status }}</h1>
+
+</div>

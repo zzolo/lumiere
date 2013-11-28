@@ -1,0 +1,15 @@
+{
+  "name": "lumiere",
+  "version": "0.0.1",
+  "homepage": "https://github.com/zzolo/lumiere",
+  "authors": [
+    "Alan Palazzolo"
+  ],
+  "description": "Lights!",
+  "main": "public/javascripts/app.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "text": "~2.0.10"
+  }
+}

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Lumière</title>
+    <link rel="stylesheet" href="/bower_components/html5-boilerplate/css/normalize.css" />
+    <link rel="stylesheet" href="/bower_components/html5-boilerplate/css/main.css" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div id="template-container"></div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/javascripts/app.js"></script>
+    <script data-main="/javascripts/app.js" src="/bower_components/requirejs/require.js"></script>
   </body>
 </html>
