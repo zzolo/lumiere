@@ -1,0 +1,32 @@
+<head>
+  <title>Lumière</title>
+</head>
+
+<body>
+  {{> application}}
+</body>
+
+<template name="application">
+  <div class="app-container {{ status }}">
+    <div class="status-indicator"></div>
+
+    <div id="color-output-canvas" class="cf">
+      {{#each current}}
+        <div class="output-light" style="background-color: {{ hex }};"></div>
+      {{/each}}
+    </div>
+
+    <div class="cf color-queue">
+      {{#each queue}}
+        <div class="color-queue-item" style="background-color: {{ colors.0.hex }};"></div>
+      {{/each}}
+    </div>
+
+    <div class="color-input-container">
+      <form class="color-input-form cf">
+        <textarea value="{{ colorInputText }}" id="color-input-text"></textarea>
+        <input type="submit" id="color-input-submit" value="Add color">
+      </form>
+    </div>
+  </div>
+</template>

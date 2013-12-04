@@ -1,0 +1,81 @@
+body {
+  background: #212125;
+  color: #FBFBFB;
+  font-size: 1.5em;
+}
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+.cf:after {
+    clear: both;
+}
+.cf {
+    *zoom: 1;
+}
+
+.app-container {
+  width: 30em;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-top: 1em;
+}
+
+.status-indicator {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 1em;
+  width: 1em;
+  height: 1em;
+  border-radius: 1em;
+  background-color: #565656;
+  opacity: 0.75;
+}
+
+.disconnected .status-indicator {
+  background-color: red;
+}
+
+.connected .status-indicator {
+  background-color: green;
+}
+
+#color-output-canvas {
+  width: 100%;
+  min-height: 16em;
+  margin-bottom: 1em;
+}
+
+#color-output-canvas .output-light {
+  height: 1.5em;
+  width: 1.5em;
+  float: left;
+}
+
+.color-queue-item {
+  width: 1em;
+  height: 1em;
+  margin: 0 1em 1em 0;
+  float: left;
+}
+
+.color-input-container textarea {
+  display: block;
+  border: transparent;
+  background-color: #FBFBFB;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+#color-input-submit {
+  border: transparent;
+  background-color: #FBFBFB;
+  opacity: 0.75;
+  margin-bottom: 1em;
+  float: right;
+}
+
+
