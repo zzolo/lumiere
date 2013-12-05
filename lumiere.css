@@ -50,9 +50,16 @@ body {
 }
 
 #color-output-canvas .output-light {
-  height: 1.5em;
-  width: 1.5em;
+  height: 2em;
+  width: 2em;
   float: left;
+  border: .25em solid #212125;
+  -webkit-border-radius: 55%;
+  -moz-border-radius: 55%;
+  border-radius: 55%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .color-queue-item {
@@ -68,14 +75,29 @@ body {
   background-color: #FBFBFB;
   width: 100%;
   margin-bottom: 1em;
+  padding: .5em;
+  resize: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: .2em;
+  -moz-border-radius: .2em;
+  border-radius: .2em;
 }
 
 #color-input-submit {
-  border: transparent;
   background-color: #FBFBFB;
-  opacity: 0.75;
+  border: .1em solid #FFFFFF;
   margin-bottom: 1em;
   float: right;
+  -webkit-border-radius: .2em;
+  -moz-border-radius: .2em;
+  border-radius: .2em;
+}
+
+#color-input-submit:hover {
+  color: #FFFFFF;
+  background-color: #212125;
 }
 
 

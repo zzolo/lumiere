@@ -16,15 +16,9 @@
       {{/each}}
     </div>
 
-    <div class="cf color-queue">
-      {{#each queue}}
-        <div class="color-queue-item" style="background-color: {{ colors.0.hex }};"></div>
-      {{/each}}
-    </div>
-
     <div class="color-input-container">
       <form class="color-input-form cf">
-        <textarea value="{{ colorInputText }}" id="color-input-text"></textarea>
+        <textarea placeholder="Enter a color, like 'red', or use a comma to separate multiple colors, 'red,blue,green'" value="{{ colorInputText }}" id="color-input-text"></textarea>
         <input type="submit" id="color-input-submit" value="Add color">
       </form>
     </div>

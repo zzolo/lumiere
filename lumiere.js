@@ -4,7 +4,7 @@
 
 // Top level objects
 var LEDs = 32 * 5;
-var phone = '+16514001501';
+var phone = '16514001501';
 var Colors = new Meteor.Collection('colors');
 var chroma;
 
@@ -17,11 +17,11 @@ if (Meteor.isClient) {
   };
 
   Template.application.queue = function() {
-    return Colors.find({}, { sort: { timestamp: 1 }}).fetch();
+    return Colors.find({}, { sort: { timestamp: -1 }}).fetch();
   };
 
   Template.application.current = function() {
-    var recent = Colors.find({}, { sort: { timestamp: 1 }}).fetch()[0];
+    var recent = Colors.find({}, { sort: { timestamp: -1 }}).fetch()[0];
     var colors = [];
     var i;
 
@@ -31,7 +31,6 @@ if (Meteor.isClient) {
         colors.push(recent.colors[i % recent.colors.length]);
       }
     }
-    console.log(colors);
     return colors;
   };
 
@@ -62,13 +61,15 @@ if (Meteor.isServer) {
       // Turn a string into a color
       findColor: function(input) {
         var color = chroma('red');
+        var r;
 
         try {
           color = chroma(input);
         }
         catch (e) {
-          // Could not find color
-          color = chroma('red');
+          // Could not find color, so use a random chroma one
+          r = (Math.floor(Math.random() * (_.size(chroma.colors))));
+          color = chroma(_.values(chroma.colors)[r]);
         }
 
         return {
@@ -137,11 +138,7 @@ if (Meteor.isServer) {
     // Should return a TwiML document.
     // https://www.twilio.com/docs/api/twiml
     if (this.request.body && this.request.body.Body) {
-      Meteor.call('addColor', this.request.body.Body, function(error, response) {
-        if (error) {
-          throw new error;
-        }
-      });
+      Meteor.call('addColor', this.request.body.Body);
     }
 
     // Return some TwiML
@@ -149,6 +146,15 @@ if (Meteor.isServer) {
       200,
       { 'content-type': 'text/xml' },
       '<?xml version="1.0" encoding="UTF-8" ?> <Response> <Sms>Thank you for your input; your color should show up shortly.  - Lumiere</Sms> </Response>'
+    ];
+  });
+
+  // Routing for color api output
+  Meteor.Router.add('/outgoing', 'GET', function() {
+    return [
+      200,
+      { 'content-type': 'application/json' },
+      JSON.stringify(Colors.find({}, { sort: { timestamp: -1 }}).fetch())
     ];
   });
 }
