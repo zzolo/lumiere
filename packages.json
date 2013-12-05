@@ -1,3 +1,4 @@
 {
-  "chroma-js": "0.5.6"
+  "chroma-js": "0.5.6",
+  "twilio": "1.4.0"
 }

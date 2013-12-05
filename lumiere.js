@@ -4,6 +4,7 @@
 
 // Top level objects
 var LEDs = 32 * 5;
+var phone = '+16514001501';
 var Colors = new Meteor.Collection('colors');
 var chroma;
 
@@ -106,5 +107,48 @@ if (Meteor.isServer) {
         }
       }
     });
+  });
+
+  // Routing for text input.  Can test locally with something like:
+  // curl --data "Body=blue" -X POST http://localhost:3000/incoming
+  Meteor.Router.add('/incoming', 'POST', function() {
+    // Example input from Twilio
+    /*
+    { AccountSid: 'XXXXXX',
+    MessageSid: 'XXXXXX',
+    Body: 'green',
+    ToZip: '55045',
+    ToCity: 'LINDSTROM',
+    FromState: 'GA',
+    ToState: 'MN',
+    SmsSid: 'XXXXXXX',
+    To: '+16514001501',
+    ToCountry: 'US',
+    FromCountry: 'US',
+    SmsMessageSid: 'XXXXX',
+    ApiVersion: '2010-04-01',
+    FromCity: 'ATLANTA',
+    SmsStatus: 'received',
+    NumMedia: '0',
+    From: '+177059XXXXX',
+    FromZip: '30354' }
+    */
+
+    // Should return a TwiML document.
+    // https://www.twilio.com/docs/api/twiml
+    if (this.request.body && this.request.body.Body) {
+      Meteor.call('addColor', this.request.body.Body, function(error, response) {
+        if (error) {
+          throw new error;
+        }
+      });
+    }
+
+    // Return some TwiML
+    return [
+      200,
+      { 'content-type': 'text/xml' },
+      '<?xml version="1.0" encoding="UTF-8" ?> <Response> <Sms>Thank you for your input; your color should show up shortly.  - Lumiere</Sms> </Response>'
+    ];
   });
 }

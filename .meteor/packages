@@ -10,3 +10,4 @@ preserve-inputs
 npm
 jquery
 underscore
+router

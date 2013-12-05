@@ -11,5 +11,6 @@ A string of LED's is connected to Arduino which is controlled by a Raspberry Pi 
 The application is a [Meteor](http://www.meteor.com/) application.
 
 1. Install Meteor: `curl https://install.meteor.com | /bin/sh`
+1. (for development) Install Meteorite: `npm install -g meteorite`
 1. Run locally: `meteor`
 1. Deploy to Meteor.com: `meteor deploy <YOUR_APP_NAME>.meteor.com`
