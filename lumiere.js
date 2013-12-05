@@ -5,8 +5,29 @@
 // Top level objects
 var LEDs = 32 * 5;
 var phone = '16514001501';
-var Colors = new Meteor.Collection('colors');
+var lumiereName = 'Lumière';
 var chroma;
+
+// Collection for color data
+var Colors = new Meteor.Collection('colors');
+
+// Shared methods that should not be called async
+var sharedMethods = {
+  fillColor: function(color) {
+    var colors = [];
+    var i;
+
+    if (!_.isUndefined(color) && _.isObject(color)) {
+      // Repeat colors
+      for (i = 0; i < LEDs; i++) {
+        colors.push(color.colors[i % color.colors.length]);
+      }
+
+      color.colors = colors;
+    }
+    return color;
+  }
+};
 
 /**
  * Client side only
@@ -22,16 +43,7 @@ if (Meteor.isClient) {
 
   Template.application.current = function() {
     var recent = Colors.find({}, { sort: { timestamp: -1 }}).fetch()[0];
-    var colors = [];
-    var i;
-
-    if (!_.isUndefined(recent) && _.isObject(recent)) {
-      // Repeat colors
-      for (i = 0; i < LEDs; i++) {
-        colors.push(recent.colors[i % recent.colors.length]);
-      }
-    }
-    return colors;
+    return sharedMethods.fillColor(recent);
   };
 
   Template.application.events({
@@ -72,19 +84,17 @@ if (Meteor.isServer) {
           color = chroma(_.values(chroma.colors)[r]);
         }
 
-        return {
-          hex: color.hex(),
-          rgb: color.rgb()
-        };
+        return color.hex();
       },
 
       // Turn input into a set of colors
       makeColors: function(input) {
         var colors = [];
 
-        _.each(input.trim().split(' '), function(c) {
+        _.each(input.trim().split(','), function(c) {
+          c = c.trim();
           if (c.length > 0) {
-            colors.push(Meteor.call('findColor', c));
+            colors.push(Meteor.call('findColor', c.toLowerCase()));
           }
         });
 
@@ -145,16 +155,20 @@ if (Meteor.isServer) {
     return [
       200,
       { 'content-type': 'text/xml' },
-      '<?xml version="1.0" encoding="UTF-8" ?> <Response> <Sms>Thank you for your input; your color should show up shortly.  - Lumiere</Sms> </Response>'
+      '<?xml version="1.0" encoding="UTF-8" ?> <Response> <Sms>Thank you for your input; your color should show up in a few seconds.  - ' + lumiereName + '</Sms> </Response>'
     ];
   });
 
   // Routing for color api output
   Meteor.Router.add('/outgoing', 'GET', function() {
+    var color = Colors.find({}, { sort: { timestamp: -1 }}).fetch()[0];
     return [
       200,
-      { 'content-type': 'application/json' },
-      JSON.stringify(Colors.find({}, { sort: { timestamp: -1 }}).fetch())
+      {
+        'content-type': 'application/json',
+        'document-id': color._id
+      },
+      JSON.stringify(sharedMethods.fillColor(color))
     ];
   });
 }

@@ -11,8 +11,8 @@
     <div class="status-indicator"></div>
 
     <div id="color-output-canvas" class="cf">
-      {{#each current}}
-        <div class="output-light" style="background-color: {{ hex }};"></div>
+      {{#each current.colors }}
+        <div class="output-light" style="background-color: {{ . }};"></div>
       {{/each}}
     </div>
 
