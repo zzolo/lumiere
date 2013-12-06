@@ -28,6 +28,9 @@ The following parts are involved, but surely these can be interchanged with your
 * [Female DC power adaptor](http://www.adafruit.com/products/368) used to connect the LED strip to the power supply.
 * A few wires.
 
+Wiring diagram: http://learn.adafruit.com/system/assets/assets/000/001/589/medium800/diagram.png
+http://learn.adafruit.com/light-painting-with-raspberry-pi/hardware
+
 ### Install software
 
 Note that [RPi-LPD8806](https://github.com/adammhaile/RPi-LPD8806) is included in this repo for ease of use.
@@ -35,4 +38,4 @@ Note that [RPi-LPD8806](https://github.com/adammhaile/RPi-LPD8806) is included i
 1. Enable SPI.
     * `sudo raspi-config`
     * Advanced options; enable SPI.
-1. 
+1. Get code: `git clone https://github.com/zzolo/lumiere.git && cd lumiere`

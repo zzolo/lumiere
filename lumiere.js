@@ -4,7 +4,7 @@
 
 // Top level objects
 var LEDs = 32 * 5;
-var phone = '16514001501';
+var phone = '+1 651 400 1501';
 var lumiereName = 'Lumière';
 var chroma;
 
@@ -44,6 +44,10 @@ if (Meteor.isClient) {
   Template.application.current = function() {
     var recent = Colors.find({}, { sort: { timestamp: -1 }}).fetch()[0];
     return sharedMethods.fillColor(recent);
+  };
+
+  Template.application.phone = function() {
+    return phone;
   };
 
   Template.application.events({

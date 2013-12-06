@@ -1,5 +1,7 @@
 <head>
   <title>Lumière</title>
+  <link href='http://fonts.googleapis.com/css?family=Monsieur+La+Doulaise' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -8,7 +10,10 @@
 
 <template name="application">
   <div class="app-container {{ status }}">
-    <div class="status-indicator"></div>
+    <div class="header">
+      <div class="status-indicator" title="Status: {{ status }}"></div>
+      <h1>Lumière</h1>
+    </div>
 
     <div id="color-output-canvas" class="cf">
       {{#each current.colors }}
@@ -18,9 +23,27 @@
 
     <div class="color-input-container">
       <form class="color-input-form cf">
-        <textarea placeholder="Enter a color, like 'red', or use a comma to separate multiple colors, 'red,blue,green'" value="{{ colorInputText }}" id="color-input-text"></textarea>
-        <input type="submit" id="color-input-submit" value="Add color">
+        <input type="text" placeholder="Enter a comma-separated list of colors" value="{{ colorInputText }}" id="color-input-text">
+        <input type="submit" id="color-input-submit" value="add">
       </form>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="about">
+      <h3>About</h3>
+
+      <p><strong>Lumière</strong> is an experiment in holiday lighting and community engagement.  Lumière invites anyone to change the lighting colors at our house either through this website or texting colors to <strong class="phone"><code>{{ phone }}</code></strong> and within a few seconds the lights will be updated.</p>
+
+      <ul>
+        <li>You can just put in one color like <code>red</code>.</li>
+        <li>Or use more than one color separated by commas like <code>red,blue,green</code>.</li>
+        <li>You can use any <a href="https://github.com/gka/chroma.js/blob/master/src/colors/w3cx11.coffee" target="_blank">color name supported by Chroma.js</a>.</li>
+        <li>Or use any hexidecimal color value like <code>#123456</code></li>
+        <li>More options to come...</li>
+      </ul>
+
+      <p>This <a href="https://github.com/zzolo/lumiere" target="_blank">project is open source</a> and you are welcome to use the code freely or help improve it.</p>
     </div>
   </div>
 </template>
