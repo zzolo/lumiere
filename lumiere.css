@@ -110,6 +110,7 @@ body {
   background-color: #FBFBFB;
   width: 80%;
   padding: .25em .5em;
+  margin-bottom: .5em;
   resize: none;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
