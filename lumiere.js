@@ -77,28 +77,57 @@ if (Meteor.isServer) {
       // Turn a string into a color
       findColor: function(input) {
         var color = chroma('red');
+        var colors = [];
         var r;
 
+        // First see if Chroma can handle the input, if that fails
+        // do a look up of custom colors, otherwise, just choose
+        // one at random
         try {
           color = chroma(input);
+          color = color.hex();
         }
         catch (e) {
-          // Could not find color, so use a random chroma one
-          r = (Math.floor(Math.random() * (_.size(chroma.colors))));
-          color = chroma(_.values(chroma.colors)[r]);
+          if (_.keys(Meteor.lumiere.colors).indexOf(input) !== -1) {
+            color = Meteor.lumiere.colors[input];
+          }
+          else {
+            r = (Math.floor(Math.random() * (_.size(Meteor.lumiere.colors))));
+            color = _.values(Meteor.lumiere.colors)[r];
+          }
         }
 
-        return color.hex();
+        // Turn values into hex
+        if (_.isString(color)) {
+          color = chroma(color).hex();
+        }
+        else if (_.isArray(color)) {
+          color.forEach(function(c) {
+            colors.push(chroma(c).hex());
+          });
+          color = colors;
+        }
+
+        return color;
       },
 
       // Turn input into a set of colors
       makeColors: function(input) {
         var colors = [];
+        var found;
 
         _.each(input.trim().split(','), function(c) {
-          c = c.trim();
+          c = c.trim().replace(/\W/g, '').toLowerCase();
           if (c.length > 0) {
-            colors.push(Meteor.call('findColor', c.toLowerCase()));
+            found = Meteor.call('findColor', c);
+            if (_.isString(found)) {
+              colors.push(found);
+            }
+            else if (_.isArray(found)) {
+              found.forEach(function(f) {
+                colors.push(f);
+              });
+            }
           }
         });
 
@@ -172,7 +201,7 @@ if (Meteor.isServer) {
         'content-type': 'application/json',
         'document-id': color._id
       },
-      JSON.stringify(sharedMethods.fillColor(color))
+      JSON.stringify(color)
     ];
   });
 }
