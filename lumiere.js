@@ -33,6 +33,16 @@ var sharedMethods = {
  * Client side only
  */
 if (Meteor.isClient) {
+
+  // Hook up nice select for colors
+  Meteor.call('getColors', function(error, response) {
+    if (error) {
+      throw new error;
+    }
+    Session.set('colorList', response);
+  });
+
+  // Hook up template values
   Template.application.status = function() {
     return Meteor.status().status;
   };
@@ -50,16 +60,36 @@ if (Meteor.isClient) {
     return phone;
   };
 
+  Template.application.colorList = function() {
+    return Session.get('colorList');
+  };
+
   Template.application.events({
     'submit .color-input-form': function(e) {
       e.preventDefault();
-      var $form = $(e.target);
+      var $form = $(e.currentTarget);
 
       Meteor.call('addColor', $form.find('#color-input-text').val(), function(error, response) {
         if (error) {
           throw new error;
         }
+        else {
+          $form.find('#color-input-text').val('');
+        }
       });
+    },
+    'click li.color-choice': function(e) {
+      e.preventDefault();
+      var $color = $(e.currentTarget);
+      var $input = $('#color-input-text');
+      var current = $input.val().split(',');
+      var name = $color.data('name');
+      current.push(name);
+
+      current = _.filter(current, function(c) {
+        return (!!c);
+      });
+      $input.val(current.join(','));
     }
   });
 }
@@ -74,6 +104,18 @@ if (Meteor.isServer) {
   // On startup
   Meteor.startup(function() {
     Meteor.methods({
+      // Get colors list
+      getColors: function() {
+        return _.sortBy(_.map(Meteor.lumiere.colors, function(c, ci) {
+          return {
+            colorName: ci,
+            colors: _.isArray(c) ? c : [ c ]
+          }
+        }), function(c) {
+          return c.colorName;
+        });
+      },
+
       // Turn a string into a color
       findColor: function(input) {
         var color = chroma('red');

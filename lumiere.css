@@ -105,6 +105,14 @@ body {
   opacity: 1;
 }
 
+.about {
+  margin-bottom: 2em;
+}
+
+.about .phone {
+  color: #F5B800;
+}
+
 #color-input-text {
   border: transparent;
   background-color: #FBFBFB;
@@ -134,12 +142,48 @@ body {
   background-color: #212125;
 }
 
-.about {
-  margin-bottom: 2em;
+.color-chooser {
+  width: 80%;
+  height: 6em;
+  overflow-y: scroll;
+  border: .1em solid #FFFFFF;
+  -webkit-border-radius: .2em;
+  -moz-border-radius: .2em;
+  border-radius: .2em;
 }
 
-.about .phone {
-  color: #F5B800;
+.color-chooser ul {
+  list-style: none;
+  margin: 1em;
+  padding: 0;
+}
+
+.color-chooser .instructions {
+  color: #676767;
+}
+
+.color-chooser .color-choice {
+  cursor: pointer;
+}
+
+.color-chooser .color-name-container {
+  display: inline-block;
+  width: 50%;
+  text-align: right;
+}
+
+.color-chooser .color-swatch-container {
+  display: inline-block;
+}
+
+.color-chooser .color-swatch {
+  height: .75em;
+  width: .75em;
+  margin-left: .25em;
+  display: inline-block;
+  -webkit-border-radius: 55%;
+  -moz-border-radius: 55%;
+  border-radius: 55%;
 }
 
 

@@ -32,7 +32,28 @@
     <div class="color-input-container">
       <form class="color-input-form cf">
         <input type="text" placeholder="Enter a comma-separated list of colors" value="{{ colorInputText }}" id="color-input-text">
+
         <input type="submit" id="color-input-submit" value="add">
+
+        <div class="color-chooser">
+          <ul>
+            <li class="instructions">Add a color to the list ...</li>
+            {{#each colorList}}
+              <li class="color-choice" data-name="{{ colorName }}">
+                <div>
+                  <div class="color-name-container">
+                    {{ colorName }}
+                  </div>
+                  <div class="color-swatch-container">
+                    {{#each this.colors}}
+                      <span class="color-swatch" style="background-color: {{ . }};"></span>
+                    {{/each}}
+                  </div>
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
       </form>
     </div>
 
