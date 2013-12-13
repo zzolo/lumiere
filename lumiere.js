@@ -156,6 +156,7 @@ if (Meteor.isServer) {
       // Turn input into a set of colors
       makeColors: function(input) {
         var colors = [];
+        var inputs = [];
         var found;
 
         _.each(input.trim().split(','), function(c) {
@@ -170,16 +171,22 @@ if (Meteor.isServer) {
                 colors.push(f);
               });
             }
+
+            inputs.push(c);
           }
         });
 
-        return colors;
+        return {
+          input: inputs.join(','),
+          colors: colors
+        };
       },
 
       // Save colors
-      saveColors: function(colors) {
+      saveColors: function(input, colors) {
         Colors.insert({
           timestamp: (new Date()).getTime(),
+          input: input,
           colors: colors
         });
       },
@@ -188,8 +195,8 @@ if (Meteor.isServer) {
       addColor: function(input) {
         var colors = Meteor.call('makeColors', input);
 
-        if (colors.length > 0) {
-          Meteor.call('saveColors', colors);
+        if (colors.colors.length > 0) {
+          Meteor.call('saveColors', colors.input, colors.colors);
         }
       }
     });

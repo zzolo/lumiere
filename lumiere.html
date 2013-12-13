@@ -29,6 +29,12 @@
       {{/each}}
     </div>
 
+    <div class="color-output-input">
+      {{ current.input }}
+    </div>
+
+    <div class="spacer"></div>
+
     <div class="color-input-container">
       <form class="color-input-form cf">
         <input type="text" placeholder="Enter a comma-separated list of colors" value="{{ colorInputText }}" id="color-input-text">
@@ -64,13 +70,7 @@
 
       <p><strong>Lumière</strong> is an experiment in holiday lighting and community engagement.  Lumière invites anyone to change the lighting colors at our house either through this website or texting colors to <strong class="phone"><code>{{ phone }}</code></strong> and within a few seconds the lights will be updated.</p>
 
-      <ul>
-        <li>You can just put in one color like <code>red</code>.</li>
-        <li>Or use more than one color separated by commas like <code>red,blue,green</code>.</li>
-        <li>You can use any <a href="https://github.com/gka/chroma.js/blob/master/src/colors/w3cx11.coffee" target="_blank">color name supported by Chroma.js</a>.</li>
-        <li>Or use any hexidecimal color value like <code>#123456</code></li>
-        <li>More options to come...</li>
-      </ul>
+      <p>Color words are a combination of <a href="https://github.com/gka/chroma.js/blob/master/src/colors/w3cx11.coffee" target="_blank">Chroma.js</a>, <a href="http://chir.ag/projects/name-that-color/" target="_blank">Name that Color</a>, and some custom ones.  Feel free to <a href="https://github.com/zzolo/lumiere/issues" target="_blank">suggest</a> some more.
 
       <p>This <a href="https://github.com/zzolo/lumiere" target="_blank">project is open source</a> and you are welcome to use the code freely or help improve it.</p>
     </div>

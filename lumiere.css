@@ -88,6 +88,10 @@ body {
   box-sizing: border-box;
 }
 
+.color-output-input {
+  text-align: center;
+}
+
 .color-queue-item {
   width: 1em;
   height: 1em;
