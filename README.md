@@ -33,9 +33,18 @@ http://learn.adafruit.com/light-painting-with-raspberry-pi/hardware
 
 ### Install software
 
-Note that [RPi-LPD8806](https://github.com/adammhaile/RPi-LPD8806) is included in this repo for ease of use.
+Note that [RPi-LPD8806](https://github.com/adammhaile/RPi-LPD8806) is included in this repo for ease of use.  It is built separately and then the `raspledstrip` directory is included.
 
 1. Enable SPI.
     * `sudo raspi-config`
     * Advanced options; enable SPI.
 1. Get code: `git clone https://github.com/zzolo/lumiere.git && cd lumiere`
+1. Install Python packages (this may have to be done with sudo): `pip install -r requirements.txt`
+1. Configure by editing top-level variables in `raspberry-pi/lumiere.py`.  This is definitely not ideal.
+1. Run manually with `python raspberry-pi/lumiere.py`
+
+### Deploy
+
+1. TODO: Upstart/service script
+1. TODO: system halt cron job
+

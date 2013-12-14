@@ -61,8 +61,9 @@ class Rainbow(BaseAnimation):
             self._led.set(self._start + i, wheel_color(color))
 
         self._step += amt
-        if self._step > 384:
-            self._step = 0
+        overflow = self._step - 384
+        if overflow >= 0:
+            self._step = overflow
 
 class RainbowCycle(BaseAnimation):
     """Generate rainbow wheel equally distributed over strip."""
@@ -76,8 +77,9 @@ class RainbowCycle(BaseAnimation):
             self._led.set(self._start + i, wheel_color(color))
 
         self._step += amt
-        if self._step > 384:
-            self._step = 0
+        overflow = self._step - 384
+        if overflow >= 0:
+            self._step = overflow
 
 class ColorPattern(BaseAnimation):
     """Fill the dots progressively along the strip with alternating colors."""
@@ -96,12 +98,13 @@ class ColorPattern(BaseAnimation):
             self._led.set(self._start + i, self._colors[cIndex])
         if self._dir:
             self._step += amt
-            if self._start + self._step > self._end:
-                self._step = 0
+            overflow = (self._start + self._step) - self._end
+            if overflow >= 0:
+                self._step = overflow
         else:
             self._step -= amt
             if self._step < 0:
-                self._step = self._end
+                self._step = self._end + self._step
 
 class ColorWipe(BaseAnimation):
     """Fill the dots progressively along the strip."""
@@ -113,12 +116,13 @@ class ColorWipe(BaseAnimation):
     def step(self, amt = 1):
         if self._step == 0:
             self._led.fillOff()
-
-        self._led.set(self._start + self._step, self._color)
+        for i in range(amt):
+            self._led.set(self._start + self._step - i, self._color)
 
         self._step += amt
-        if self._start + self._step > self._end:
-            self._step = 0
+        overflow = (self._start + self._step) - self._end
+        if overflow >= 0:
+            self._step = overflow
 
 class ColorFade(BaseAnimation):
     """Fill the dots progressively along the strip."""
@@ -144,21 +148,24 @@ class ColorFade(BaseAnimation):
 class ColorChase(BaseAnimation):
     """Chase one pixel down the strip."""
 
-    def __init__(self, led, color, start=0, end=0):
+    def __init__(self, led, color, width=1, start=0, end=0):
         super(ColorChase, self).__init__(led, start, end)
         self._color = color
+        self._width = width
 
     def step(self, amt = 1):
         if self._step == 0:
             self._led.setOff(self._end)
         else:
-            self._led.setOff(self._start + self._step - 1)
+            self._led.fillOff() #because I am lazy
 
-        self._led.set(self._start + self._step, self._color)
+        for i in range(self._width):
+            self._led.set(self._start + self._step + i, self._color)
 
         self._step += amt
-        if self._start + self._step > self._end:
-            self._step = 0
+        overflow = (self._start + self._step) - self._end
+        if overflow >= 0:
+            self._step = overflow
 
 class PartyMode(BaseAnimation):
     """Stobe Light Effect."""
@@ -183,24 +190,27 @@ class PartyMode(BaseAnimation):
 class FireFlies(BaseAnimation):
     """Stobe Light Effect."""
 
-    def __init__(self, led, colors, width = 1, start=0, end=0):
+    def __init__(self, led, colors, width = 1, count = 1, start=0, end=0):
         super(FireFlies, self).__init__(led, start, end)
         self._colors = colors
         self._color_count = len(colors)
         self._width = width
+        self._count = count
 
     def step(self, amt = 1):
         amt = 1 #anything other than 1 would be just plain silly
         if self._step > self._led.leds:
             self._step = 0
 
-        pixel = random.randint(0, self._led.leds - 1)
-        color = self._colors[random.randint(0, self._color_count - 1)]
-
         self._led.fillOff();
-        for i in range(self._width):
-            if pixel + i < self._led.leds:
-                self._led.set(pixel + i, color)
+
+        for i in range(self._count):
+            pixel = random.randint(0, self._led.leds - 1)
+            color = self._colors[random.randint(0, self._color_count - 1)]
+
+            for i in range(self._width):
+                if pixel + i < self._led.leds:
+                    self._led.set(pixel + i, color)
 
         self._step += amt
 
@@ -303,3 +313,39 @@ class Wave(BaseAnimation):
             self._led.set(self._start + i, c2)
 
         self._step += amt
+
+
+import time
+import timecolors
+class RGBClock(BaseAnimation):
+    """RGB Clock done with RGB LED strip(s)"""
+
+    def __init__(self, led, hStart, hEnd, mStart, mEnd, sStart, sEnd):
+        super(RGBClock, self).__init__(led, 0, 0)
+        if hEnd < hStart:
+            hEnd = hStart + 1
+        if mEnd < mStart:
+            mEnd = mStart + 1
+        if sEnd < sStart:
+            sEnd = sStart + 1
+        self._hStart = hStart
+        self._hEnd = hEnd
+        self._mStart = mStart
+        self._mEnd = mEnd
+        self._sStart = sStart
+        self._sEnd = sEnd
+        
+
+    def step(self, amt = 1):
+        t = time.localtime()
+
+        r, g, b = timecolors._hourColors[t.tm_hour]
+        self._led.fillRGB(r,g,b,self._hStart,self._hEnd)
+
+        r, g, b = timecolors._minSecColors[t.tm_min]
+        self._led.fillRGB(r,g,b,self._mStart,self._mEnd)
+
+        r, g, b = timecolors._minSecColors[t.tm_sec]
+        self._led.fillRGB(r,g,b,self._sStart,self._sEnd)
+
+        self._step = 0
