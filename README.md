@@ -48,10 +48,10 @@ The following parts are involved, but surely these can be interchanged with your
 * [4 pin JST SM plug](http://www.adafruit.com/products/578) used to connect the LED strip to other wires.  If you have a LED strip with a JST end, this will make it easy to disconnect things.
 * [5V 10A power supply](http://www.adafruit.com/products/658).
 * [Female DC power adaptor](http://www.adafruit.com/products/368) used to connect the LED strip and Raspberry Pi to the power supply.  For those of us that don't know about these things that well, the `-` should be connected to ground and `+` to the 5V power.
-* Some prototyping wires.
+* Some [prototyping wires](http://www.instructables.com/id/Protobloc-prototyping-wires/).
 * [4 wire caps](http://en.wikipedia.org/wiki/Twist-on_wire_connector) to connect the JST strand wires to the prototype wires which are solid wires.
-* [2 snap action wire blocks to split the power](http://www.adafruit.com/products/866)].
-* [Cobbler breakout](http://www.adafruit.com/products/914) this is used to connect the Raspberry Pi GPIO to the breadboard.  Note that the ribbon calbe came connected but not in a way that was intuitive to me and I ended up breaking things, so double check that the pins are right.
+* [2 snap action wire blocks to split the power](http://www.adafruit.com/products/866).
+* [Cobbler breakout](http://www.adafruit.com/products/914) this is used to connect the Raspberry Pi GPIO to the breadboard.  Note that the ribbon cable came connected but not in a way that was intuitive to me and I ended up breaking things, so double check that the breakout board is aligned correctly with the GPIO diagram.
 * [Breadboard](http://www.adafruit.com/products/64).
 
 There is a good example of you might hook up the light efficiently at [this tutorial](http://learn.adafruit.com/light-painting-with-raspberry-pi/hardware).
