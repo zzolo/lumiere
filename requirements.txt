@@ -1,1 +1,2 @@
 Requests
+https://github.com/adammhaile/RPi-LPD8806/archive/master.zip
