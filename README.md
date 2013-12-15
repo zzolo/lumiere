@@ -56,6 +56,10 @@ The following parts are involved, but surely these can be interchanged with your
 
 There is a good example of you might hook up the light efficiently at [this tutorial](http://learn.adafruit.com/light-painting-with-raspberry-pi/hardware).
 
+Here is an image of my near final configuration:
+
+![Near-final project](!https://raw.github.com/zzolo/lumiere/master/public/near-final.jpg)
+
 ### Install software
 
 This script needs to be run as a user that has root priviledges as it needs access to the GPIO pins.
