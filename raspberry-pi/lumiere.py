@@ -1,4 +1,4 @@
-from raspledstrip import *
+from raspledstrip.ledstrip import *
 import requests
 import json
 import time
@@ -26,7 +26,7 @@ class Lumiere:
     self.waitTime = waitTime
 
     self.led = LEDStrip(ledCount)
-    self.led.setOff()
+    self.led.all_off()
 
 
   def listen(self):
@@ -51,6 +51,8 @@ class Lumiere:
     self.fillArray()
     for li, l in enumerate(self.ledArray):
       self.led.setRGB(li, l[0], l[1], l[2])
+
+    self.led.update()
 
 
   def fillArray(self):
