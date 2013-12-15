@@ -38,7 +38,7 @@ I used a [5 meter length of RGB LED strip (the LPD8806 model)](http://www.adafru
 
 In short, I used this diagram (from [adafruit](http://learn.adafruit.com/light-painting-with-raspberry-pi/hardware)) to hook up the lights to the Raspberry Pi and share the power between the two.
 
-![Raspberry Pi to LDP8806 diagram](!https://raw.github.com/zzolo/lumiere/master/public/adafruit-raspberry-pi-ldp8806-diagram.png)
+![Raspberry Pi to LDP8806 diagram](https://raw.github.com/zzolo/lumiere/master/public/adafruit-raspberry-pi-ldp8806-diagram.png)
 
 #### Details
 
@@ -58,7 +58,7 @@ There is a good example of you might hook up the light efficiently at [this tuto
 
 Here is an image of my near final configuration:
 
-![Near-final project](!https://raw.github.com/zzolo/lumiere/master/public/near-final.jpg)
+![Near-final project](https://raw.github.com/zzolo/lumiere/master/public/near-final.jpg)
 
 ### Install software
 
