@@ -10,6 +10,8 @@ Running example at: [lumiere.meteor.com](http://lumiere.meteor.com)
 
 Though these instructions are details the code written has not been abstracted to where configuration is outside the code, so deploying means changing values in code.
 
+Inspiration taken from [textmas](https://github.com/emilyville/textmas).
+
 ## Running web application
 
 The application is a [Meteor](http://www.meteor.com/) application.
@@ -36,7 +38,7 @@ I used a [5 meter length of RGB LED strip (the LPD8806 model)](http://www.adafru
 
 In short, I used this diagram (from [adafruit](http://learn.adafruit.com/light-painting-with-raspberry-pi/hardware)) to hook up the lights to the Raspberry Pi and share the power between the two.
 
-[](!https://raw.github.com/zzolo/lumiere/master/public/adafruit-raspberry-pi-ldp8806-diagram.png)
+![Raspberry Pi to LDP8806 diagram](!https://raw.github.com/zzolo/lumiere/master/public/adafruit-raspberry-pi-ldp8806-diagram.png)
 
 #### Details
 
@@ -48,7 +50,7 @@ The following parts are involved, but surely these can be interchanged with your
 * [Female DC power adaptor](http://www.adafruit.com/products/368) used to connect the LED strip and Raspberry Pi to the power supply.  For those of us that don't know about these things that well, the `-` should be connected to ground and `+` to the 5V power.
 * Some prototyping wires.
 * [4 wire caps](http://en.wikipedia.org/wiki/Twist-on_wire_connector) to connect the JST strand wires to the prototype wires which are solid wires.
-* [2 snap action wire blocks to split the power(http://www.adafruit.com/products/866)].
+* [2 snap action wire blocks to split the power](http://www.adafruit.com/products/866)].
 * [Cobbler breakout](http://www.adafruit.com/products/914) this is used to connect the Raspberry Pi GPIO to the breadboard.  Note that the ribbon calbe came connected but not in a way that was intuitive to me and I ended up breaking things, so double check that the pins are right.
 * [Breadboard](http://www.adafruit.com/products/64).
 
