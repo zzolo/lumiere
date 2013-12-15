@@ -79,6 +79,15 @@ This script needs to be run as a user that has root priviledges as it needs acce
 
 ### Deploy
 
-1. TODO: Upstart/service script
-1. TODO: system halt cron job
+This adds an [Upstart](http://en.wikipedia.org/wiki/Upstart) script so that the light script is run automatically on start up and restarts if something goes wrong.
+
+1. Install Upstart: `sudo apt-get install upstart`
+1. Link the Upstart script in to init: `sudo ln -s /etc/event.d/lumiere /home/pi/lumiere/raspberry-pi/lumiere.upstart`
+1. Restart the Pi: `sudo shutdown -r now`
+
+#### Auto turn off
+
+If you want to turn off the Raspberry Pi at a specific time, add the following line to cron.  Note that this will not actually turn off the lights or stop power going to the Raspberry Pi, but simply shuts it down so that power can be disconnected.  I am using this with a outlet time that turns off a bit after this runs.
+
+1. This adds a line to the crontab to shutodwn at `2:45 AM`: `sudo (crontab -l ; echo "45 2 * * * shutdown -h now") | crontab -`
 
