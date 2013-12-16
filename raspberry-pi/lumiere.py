@@ -51,9 +51,16 @@ class Lumiere:
     Change the lights.
     """
     self.fillArray()
+
+    # Animate
+    anim = FireFlies(self.led, self.ledArray, 1, 1, 0, self.led.lastIndex)
+    for i in range(50):
+      anim.step()
+      self.led.update()
+
+    # Final fill
     for li, l in enumerate(self.ledArray):
       self.led.set(li, l)
-
     self.led.update()
 
 
