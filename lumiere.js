@@ -34,25 +34,13 @@ var sharedMethods = {
  */
 if (Meteor.isClient) {
 
-  // Hook up nice select for colors
-  Meteor.call('getColors', function(error, response) {
-    if (error) {
-      throw new error;
-    }
-    Session.set('colorList', response);
-  });
-
   // Hook up template values
   Template.application.status = function() {
     return Meteor.status().status;
   };
 
-  Template.application.queue = function() {
-    return Colors.find({}, { sort: { timestamp: -1 }}).fetch();
-  };
-
   Template.application.current = function() {
-    var recent = Colors.find({}, { sort: { timestamp: -1 }}).fetch()[0];
+    var recent = Colors.find({}, { sort: { timestamp: -1 }, limit: 1 }).fetch()[0];
     return sharedMethods.fillColor(recent);
   };
 
@@ -61,7 +49,7 @@ if (Meteor.isClient) {
   };
 
   Template.application.colorList = function() {
-    return Session.get('colorList');
+    return Meteor.lumiere.colors;
   };
 
   Template.application.events({
@@ -104,22 +92,13 @@ if (Meteor.isServer) {
   // On startup
   Meteor.startup(function() {
     Meteor.methods({
-      // Get colors list
-      getColors: function() {
-        return _.sortBy(_.map(Meteor.lumiere.colors, function(c, ci) {
-          return {
-            colorName: ci,
-            colors: _.isArray(c) ? c : [ c ]
-          }
-        }), function(c) {
-          return c.colorName;
-        });
-      },
 
       // Turn a string into a color
       findColor: function(input) {
+        var names = _.pluck(Meteor.lumiere.colors, 'colorName');
         var color = chroma('red');
         var colors = [];
+        var found;
         var r;
 
         // First see if Chroma can handle the input, if that fails
@@ -130,12 +109,14 @@ if (Meteor.isServer) {
           color = color.hex();
         }
         catch (e) {
-          if (_.keys(Meteor.lumiere.colors).indexOf(input) !== -1) {
-            color = Meteor.lumiere.colors[input];
+          found = names.indexOf(input);
+
+          if (found !== -1) {
+            color = Meteor.lumiere.colors[found].colors;
           }
           else {
             r = (Math.floor(Math.random() * (_.size(Meteor.lumiere.colors))));
-            color = _.values(Meteor.lumiere.colors)[r];
+            color = _.values(Meteor.lumiere.colors)[r].colors;
           }
         }
 

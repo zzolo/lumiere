@@ -45,8 +45,15 @@ body {
   font-size: 2.5em;
   font-family: 'Monsieur La Doulaise', cursive;
   padding: 0;
-  margin-top: 0;
-  margin-bottom: 1em;
+  margin: 0;
+}
+
+.header h2 {
+  font-size: 1em;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 2em;
+  opacity: 0.75;
 }
 
 .status-indicator {
@@ -100,13 +107,7 @@ body {
 }
 
 .color-input-container form {
-  opacity: 0.85;
   padding: 0 1em;
-}
-
-.color-input-container form:focus,
-.color-input-container form:hover {
-  opacity: 1;
 }
 
 .about {
@@ -147,8 +148,8 @@ body {
 }
 
 .color-chooser {
-  width: 80%;
-  height: 6em;
+  width: 90%;
+  height: 10em;
   overflow-y: scroll;
   border: .1em solid #FFFFFF;
   -webkit-border-radius: .2em;
@@ -172,7 +173,7 @@ body {
 
 .color-chooser .color-name-container {
   display: inline-block;
-  width: 50%;
+  width: 40%;
   text-align: right;
 }
 
@@ -183,7 +184,7 @@ body {
 .color-chooser .color-swatch {
   height: .75em;
   width: .75em;
-  margin-left: .25em;
+  margin-left: .15em;
   display: inline-block;
   -webkit-border-radius: 55%;
   -moz-border-radius: 55%;
@@ -210,5 +211,13 @@ body {
 
   .color-input-container textarea {
     height: 6.5em;
+  }
+
+
+  .color-chooser .color-name-container {
+    display: inline-block;
+    width: 75%;
+    text-align: right;
+    font-size: .85em;
   }
 }
