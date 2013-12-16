@@ -90,5 +90,6 @@ This adds an [Upstart](http://en.wikipedia.org/wiki/Upstart) script so that the 
 
 If you want to turn off the Raspberry Pi at a specific time, add the following line to cron.  Note that this will not actually turn off the lights or stop power going to the Raspberry Pi, but simply shuts it down so that power can be disconnected.  I am using this with a outlet time that turns off a bit after this runs.
 
-1. This adds a line to the crontab to shutodwn at `2:45 AM`: `sudo (crontab -l ; echo "45 2 * * * shutdown -h now") | crontab -`
+1. This adds a line to the crontab to shutodwn at `2:45 AM`: `(sudo crontab -l ; echo "45 2 * * * shutdown -h now") | sudo crontab -`
+    * If you don't have a crontab for root yet, then you will get a message like `no crontab for root` which is fine.
 
