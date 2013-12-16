@@ -44,9 +44,10 @@ In short, I used this diagram (from [adafruit](http://learn.adafruit.com/light-p
 
 The following parts are involved, but surely these can be interchanged with your preferred parts.
 
-* [5 meter length of RGB LED strip (the LPD8806 model)](http://www.adafruit.com/products/306).  If you get 5 meters of these LEDs they come with the JST input and output connected, otherwise, you may have to solder wires to the end in order to connect to the Raspberry Pi.  Also, people have reported that the input and output may not be what you expect so double check which end you connect to.  See [this tutorial](http://learn.adafruit.com/digital-led-strip/wiring) to read details.
+* [5 meter length of RGB LED strip (the LPD8806 model)](http://www.adafruit.com/products/306).  If you get 5 meters of these LEDs they come with the JST input and output connected, otherwise, you may have to solder wires to the end in order to connect to the Raspberry Pi.  Also, people have reported that the input and output may not be what you expect so double check which end you connect to.
+    * It is very important that you read [this tutorial](http://learn.adafruit.com/digital-led-strip/wiring) to know the intricacies of this LED strip.
 * [4 pin JST SM plug](http://www.adafruit.com/products/578) used to connect the LED strip to other wires.  If you have a LED strip with a JST end, this will make it easy to disconnect things.
-* [5V 10A power supply](http://www.adafruit.com/products/658).
+* [5V 10A power supply](http://www.adafruit.com/products/658).  The above LED strip can only handle 5V so don't use more.
 * [Female DC power adaptor](http://www.adafruit.com/products/368) used to connect the LED strip and Raspberry Pi to the power supply.  For those of us that don't know about these things that well, the `-` should be connected to ground and `+` to the 5V power.
 * Some [prototyping wires](http://www.instructables.com/id/Protobloc-prototyping-wires/).
 * [4 wire caps](http://en.wikipedia.org/wiki/Twist-on_wire_connector) to connect the JST strand wires to the prototype wires which are solid wires.
@@ -88,7 +89,7 @@ This adds an [Upstart](http://en.wikipedia.org/wiki/Upstart) script so that the 
 
 #### Auto turn off
 
-If you want to turn off the Raspberry Pi at a specific time, add the following line to cron.  Note that this will not actually turn off the lights or stop power going to the Raspberry Pi, but simply shuts it down so that power can be disconnected.  I am using this with a outlet time that turns off a bit after this runs.
+If you want to turn off the Raspberry Pi at a specific time, add the following line to cron.  Note that this will not actually turn off the lights or stop power going to the Raspberry Pi, but simply shuts it down so that power can be disconnected.  I am using this with a outlet timer that turns off a bit after the cron shutdown runs.
 
 1. This adds a line to the crontab to shutodwn at `2:45 AM`: `(sudo crontab -l ; echo "45 2 * * * shutdown -h now") | sudo crontab -`
     * If you don't have a crontab for root yet, then you will get a message like `no crontab for root` which is fine.
