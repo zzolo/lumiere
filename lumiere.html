@@ -13,67 +13,73 @@
 </head>
 
 <body>
-  {{> application}}
+  <div class="app-container">
+    {{> header}}
+    {{> lights}}
+    <div class="spacer"></div>
+    {{> input}}
+    <div class="spacer"></div>
+    {{> about}}
 </body>
 
-<template name="application">
-  <div class="app-container {{ status }}">
-    <div class="header">
-      <div class="status-indicator" title="Status: {{ status }}"></div>
-      <h1>Lumière</h1>
-      <h2>Change our holiday lighting</h2>
-    </div>
+<template name="header">
+  <div class="header {{ status }}">
+    <div class="status-indicator" title="Status: {{ status }}"></div>
+    <h1>Lumière</h1>
+    <h2>Change our holiday lighting</h2>
+  </div>
+</template>
 
-    <div id="color-output-canvas" class="cf">
-      {{#each current.colors }}
-        <div class="output-light" style="background-color: {{ . }};"></div>
-      {{/each}}
-    </div>
+<template name="lights">
+  <div id="color-output-canvas" class="cf">
+    {{#each current.colors }}
+      <div class="output-light" style="background-color: {{ . }};"></div>
+    {{/each}}
+  </div>
 
-    <div class="color-output-input">
-      {{ current.input }}
-    </div>
+  <div class="color-output-input">
+    {{ current.input }}
+  </div>
+</template>
 
-    <div class="spacer"></div>
+<template name="input">
+  <div class="color-input-container">
+    <form class="color-input-form cf">
+      <input type="text" placeholder="Enter a comma-separated list of colors" value="{{ colorInputText }}" id="color-input-text">
 
-    <div class="color-input-container">
-      <form class="color-input-form cf">
-        <input type="text" placeholder="Enter a comma-separated list of colors" value="{{ colorInputText }}" id="color-input-text">
+      <input type="submit" id="color-input-submit" value="change">
 
-        <input type="submit" id="color-input-submit" value="change">
-
-        <div class="color-chooser">
-          <ul>
-            <li class="instructions">Add a color to the list ...</li>
-            {{#each colorList}}
-              <li class="color-choice" data-name="{{ colorName }}">
-                <div>
-                  <div class="color-name-container">
-                    {{ colorName }}
-                  </div>
-                  <div class="color-swatch-container">
-                    {{#each this.colors}}
-                      <span class="color-swatch" style="background-color: {{ . }};"></span>
-                    {{/each}}
-                  </div>
+      <div class="color-chooser">
+        <ul>
+          <li class="instructions">Add a color to the list ...</li>
+          {{#each colorList}}
+            <li class="color-choice" data-name="{{ colorName }}">
+              <div>
+                <div class="color-name-container">
+                  {{ colorName }}
                 </div>
-              </li>
-            {{/each}}
-          </ul>
-        </div>
-      </form>
-    </div>
+                <div class="color-swatch-container">
+                  {{#each this.colors}}
+                    <span class="color-swatch" style="background-color: {{ . }};"></span>
+                  {{/each}}
+                </div>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </form>
+  </div>
+</template>
 
-    <div class="spacer"></div>
+<template name="about">
+  <div class="about">
+    <h3>About</h3>
 
-    <div class="about">
-      <h3>About</h3>
+    <p><strong>Lumière</strong> is an experiment in holiday lighting and community engagement.  Lumière invites anyone to change the colors of our external, holiday lights at our house either through this website or texting colors to <strong class="phone"><code>{{ phone }}</code></strong>.  Just wait a few seconds and the lights will be updated.</p>
 
-      <p><strong>Lumière</strong> is an experiment in holiday lighting and community engagement.  Lumière invites anyone to change the colors of our external, holiday lights at our house either through this website or texting colors to <strong class="phone"><code>{{ phone }}</code></strong>.  Just wait a few seconds and the lights will be updated.</p>
+    <p>Color words are a combination of <a href="https://github.com/gka/chroma.js/blob/master/src/colors/w3cx11.coffee" target="_blank">Chroma.js</a>, <a href="https://github.com/gka/chroma.js/blob/master/src/colors/colorbrewer.coffee" target="_blank">Colorbrewer</a>, <a href="http://chir.ag/projects/name-that-color/" target="_blank">Name that Color</a>, and some custom ones.  Feel free to <a href="https://github.com/zzolo/lumiere/issues" target="_blank">suggest</a> some more.
 
-      <p>Color words are a combination of <a href="https://github.com/gka/chroma.js/blob/master/src/colors/w3cx11.coffee" target="_blank">Chroma.js</a>, <a href="https://github.com/gka/chroma.js/blob/master/src/colors/colorbrewer.coffee" target="_blank">Colorbrewer</a>, <a href="http://chir.ag/projects/name-that-color/" target="_blank">Name that Color</a>, and some custom ones.  Feel free to <a href="https://github.com/zzolo/lumiere/issues" target="_blank">suggest</a> some more.
-
-      <p>This <a href="https://github.com/zzolo/lumiere" target="_blank">project is open source</a> and you are welcome to use the code freely or help improve it.</p>
-    </div>
+    <p>This <a href="https://github.com/zzolo/lumiere" target="_blank">project is open source</a> and you are welcome to use the code freely or help improve it.</p>
   </div>
 </template>

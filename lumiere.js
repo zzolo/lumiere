@@ -35,24 +35,24 @@ var sharedMethods = {
 if (Meteor.isClient) {
 
   // Hook up template values
-  Template.application.status = function() {
+  Template.header.status = function() {
     return Meteor.status().status;
   };
 
-  Template.application.current = function() {
+  Template.lights.current = function() {
     var recent = Colors.find({}, { sort: { timestamp: -1 }, limit: 1 }).fetch()[0];
     return sharedMethods.fillColor(recent);
   };
 
-  Template.application.phone = function() {
+  Template.about.phone = function() {
     return phone;
   };
 
-  Template.application.colorList = function() {
+  Template.input.colorList = function() {
     return Meteor.lumiere.colors;
   };
 
-  Template.application.events({
+  Template.input.events({
     'submit .color-input-form': function(e) {
       e.preventDefault();
       var $form = $(e.currentTarget);
