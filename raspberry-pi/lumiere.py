@@ -1,4 +1,6 @@
 from raspledstrip.ledstrip import *
+from raspledstrip.animation import *
+from raspledstrip.color import Color
 import requests
 import json
 import time
@@ -50,7 +52,7 @@ class Lumiere:
     """
     self.fillArray()
     for li, l in enumerate(self.ledArray):
-      self.led.setRGB(li, l[0], l[1], l[2])
+      self.led.set(li, l)
 
     self.led.update()
 
@@ -60,10 +62,14 @@ class Lumiere:
     Fill up LED count with all the colors.
     """
     self.ledArray = []
+    ledArray = []
     length = len(self.current['colors'])
 
     for x in range(0, self.ledCount - 1):
-      self.ledArray.append(self.hex_to_rgb(self.current['colors'][x % length]))
+      ledArray.append(self.hex_to_rgb(self.current['colors'][x % length]))
+
+    for li, l in enumerate(ledArray):
+      self.ledArray.append(Color(l[0], l[1], l[2]))
 
 
   def queryLights(self):
