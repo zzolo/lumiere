@@ -82,8 +82,9 @@ This script needs to be run as a user that has root priviledges as it needs acce
 This adds an [Upstart](http://en.wikipedia.org/wiki/Upstart) script so that the light script is run automatically on start up and restarts if something goes wrong.
 
 1. Install Upstart: `sudo apt-get install upstart`
-1. Link the Upstart script in to init: `sudo ln -s /etc/event.d/lumiere /home/pi/lumiere/raspberry-pi/lumiere.upstart`
+1. Link the Upstart script in to init: `sudo cp /home/pi/lumiere/raspberry-pi/lumiere.upstart /etc/init/lumiere.conf && sudo chmod +x /etc/init/lumiere.conf`
 1. Restart the Pi: `sudo shutdown -r now`
+    * It should start automatically, but you can control the process manually with: `sudo service lumiere start|restart|status|stop`
 
 #### Auto turn off
 

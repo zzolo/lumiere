@@ -1,7 +1,7 @@
 description "Manage Lumiere"
 author "Alan Palazzolo"
 
-start on started mountall
+start on (started networking)
 stop on shutdown
 
 # Restart the process if it dies with a signal
