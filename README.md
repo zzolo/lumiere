@@ -4,17 +4,17 @@ SMS :arrow_right: web :arrow_right: LED = fun for everyone.
 
 ## The basics
 
-A string of LED's is connected to a Raspberry Pi which looks to the web to figure out what color those LEDs should be.  The website has an interface and an SMS mechanism for changin the color.  Got it?
+A string of LED's is connected to a Raspberry Pi which looks to the web to figure out what color those LEDs should be.  The website has an interface and an SMS mechanism for changin the color.
 
-Running example at: [lumiere.meteor.com](http://lumiere.meteor.com)
+Web example at: [lumiere.meteor.com](http://lumiere.meteor.com)
 
-Though these instructions are details the code written has not been abstracted to where configuration is outside the code, so deploying means changing values in code.
+Though these instructions are detailed, the code has not been abstracted to where configuration lives outside the code, so deploying means changing (just a few) values in code.
 
 Inspiration taken from [textmas](https://github.com/emilyville/textmas).
 
 ## Running web application
 
-The application is a [Meteor](http://www.meteor.com/) application.
+The application is a [Meteor](http://www.meteor.com/) application, and to note, my first Meteor application.
 
 1. Install Meteor: `curl https://install.meteor.com | /bin/sh`
 1. (for development) Install Meteorite: `npm install -g meteorite`
@@ -28,7 +28,7 @@ These instructions are for using Twilio, but it would not be too hard to change 
 1. Create an account at Twilio.
 1. Obtain a [phone number](https://www.twilio.com/user/account/phone-numbers) or use an existing one if you already have one set up.
 1. Under the settings for that phone number, set the Messaging POST value to `http://<YOUR_APP_NAME>.meteor.com/incoming`.
-1. There is no real set up for the web application part, but the application displays the phone number so you may want to up date that.
+1. There is no real set up for the web application part, but the application displays the phone number so you may want to update that.
 
 ## Raspberry Pi
 
