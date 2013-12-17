@@ -28,6 +28,10 @@ The "easiest" way to get up and running would be to just make another node that 
 
 A node by default will listen to the deployed [lumiere.meteor.com](http://lumiere.meteor.com) and therefore all the nodes connected to it will be the same color.  See below for deploying a server if you want to manage colors independently.
 
+### Get a Raspberry Pi
+
+A [Raspberry Pi](http://www.raspberrypi.org/) is a small computer.  [Adafruit](http://www.adafruit.com/category/105) is a good place to purchase one.  Set it up and make sure it can connect to the internet and you have command line access to it.  Depending on where you want your lights, you may want to look into setting up wireless network access for the Raspberry Pi.
+
 ### Hook up lights
 
 I used a [5 meter length of RGB LED strip (the LPD8806 model)](http://www.adafruit.com/products/306) to do this project, but you could do other things if you wanted to change the code for the Raspberry Pi a bit.  Also note that my hardware skills are not very good, so how to hook things up could probably be improved.
