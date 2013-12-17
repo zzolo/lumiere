@@ -6,7 +6,7 @@ SMS :arrow_right: web :arrow_right: LED = fun for everyone.
 
 A string of LED's is connected to a Raspberry Pi which looks to the web to figure out what color those LEDs should be.  The website has an interface and an SMS mechanism for changin the color.
 
-Web example at: [lumiere.meteor.com](http://lumiere.meteor.com)
+Web example at [lumiere.meteor.com](http://lumiere.meteor.com).  You can see a [basic video](https://www.youtube.com/watch?v=_k-bI2xsQ-s) of it up and running and being used via texting.
 
 Though these instructions are detailed, the code has not been abstracted to where configuration lives outside the code, so deploying means changing (just a few) values in code.
 
