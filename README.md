@@ -1,36 +1,32 @@
 # Lumière
 
-SMS :arrow_right: web :arrow_right: LED = fun for everyone.
+SMS :arrow_right: web :arrow_right: Raspberry Pi :arrow_right: LEDs = fun for everyone.  :traffic_light:
 
 ## The basics
 
-A string of LED's is connected to a Raspberry Pi which looks to the web to figure out what color those LEDs should be.  The website has an interface and an SMS mechanism for changin the color.
+Lumière is an experiment (read as it might break) in holiday lighting and community engagement.  Lumière invites anyone to change the colors of our external, holiday lights either through a website or with SMS/texting.
 
-Web example at: [lumiere.meteor.com](http://lumiere.meteor.com)
+There are over 1,500 color words and sets.  Color words are a combination of [Chroma.js](https://github.com/gka/chroma.js/blob/master/src/colors/w3cx11.coffee), [Name that Color](https://github.com/gka/chroma.js/blob/master/src/colors/colorbrewer.coffee), and some custom ones.  Feel free to [suggest](https://github.com/zzolo/lumiere/issues) some more.
 
-Though these instructions are detailed, the code has not been abstracted to where configuration lives outside the code, so deploying means changing (just a few) values in code.
+Web example at [lumiere.meteor.com](http://lumiere.meteor.com).  Watch a [video of an example deployment](https://www.youtube.com/watch?v=_k-bI2xsQ-s).
 
 Inspiration taken from [textmas](https://github.com/emilyville/textmas).
 
-## Running web application
+## Architecture
 
-The application is a [Meteor](http://www.meteor.com/) application, and to note, my first Meteor application.
+1. Server
+    * A Meteor application is run that keeps track of what color(s) the lights should be.
+    * Provides a web interface for choosing colors and basic representation of current colors.
+    * Accepts input via SMS.
+1. Nodes
+    * Each individual node checks to see what color the lights should be and changes them accordingly.
+    * Each node is an internet-enable Raspberry Pi with a string of programmable LED lights connected to it.
 
-1. Install Meteor: `curl https://install.meteor.com | /bin/sh`
-1. (for development) Install Meteorite: `npm install -g meteorite`
-1. Run locally: `meteor`
-1. Deploy to Meteor.com: `meteor deploy <YOUR_APP_NAME>.meteor.com`
+The "easiest" way to get up and running would be to just make another node that hooks up to the default [lumiere.meteor.com](http://lumiere.meteor.com) and syncs colors with others.  This involves obtaining hardware ($$) and installing some software on the Raspberry Pi.
 
-### Set up SMS
+## Deploying a node
 
-These instructions are for using Twilio, but it would not be too hard to change things around for another SMS service.
-
-1. Create an account at Twilio.
-1. Obtain a [phone number](https://www.twilio.com/user/account/phone-numbers) or use an existing one if you already have one set up.
-1. Under the settings for that phone number, set the Messaging POST value to `http://<YOUR_APP_NAME>.meteor.com/incoming`.
-1. There is no real set up for the web application part, but the application displays the phone number so you may want to update that.
-
-## Raspberry Pi
+A node by default will listen to the deployed [lumiere.meteor.com](http://lumiere.meteor.com) and therefore all the nodes connected to it will be the same color.  See below for deploying a server if you want to manage colors independently.
 
 ### Hook up lights
 
@@ -63,7 +59,11 @@ Here is an image of my near final configuration:
 
 ### Install software
 
-This script needs to be run as a user that has root priviledges as it needs access to the GPIO pins.
+(coming soon) Download this Raspberry Pi image, burn it to a SD card and insert into your Raspberry Pi.
+
+#### Install python code
+
+This script needs to be run as a user that has root priviledges as it needs access to the GPIO pins.  The default `pi` user will work fine.
 
 1. Enable SPI.
     * `sudo raspi-config`
@@ -78,7 +78,7 @@ This script needs to be run as a user that has root priviledges as it needs acce
 1. Install Python packages: `sudo pip install -r requirements.txt`
 1. Run manually with `python raspberry-pi/lumiere.py`
 
-### Deploy
+#### Auto start (optional)
 
 This adds an [Upstart](http://en.wikipedia.org/wiki/Upstart) script so that the light script is run automatically on start up and restarts if something goes wrong.
 
@@ -87,10 +87,35 @@ This adds an [Upstart](http://en.wikipedia.org/wiki/Upstart) script so that the 
 1. Restart the Pi: `sudo shutdown -r now`
     * It should start automatically, but you can control the process manually with: `sudo service lumiere start|restart|status|stop`
 
-#### Auto turn off
+#### Auto turn off (optional)
 
-If you want to turn off the Raspberry Pi at a specific time, add the following line to cron.  Note that this will not actually turn off the lights or stop power going to the Raspberry Pi, but simply shuts it down so that power can be disconnected.  I am using this with a outlet timer that turns off a bit after the cron shutdown runs.
+If you want to turn off the Raspberry Pi at a specific time, add the following line to cron.  Note that this will not actually turn off the lights or stop power going to the Raspberry Pi, but simply shuts it down so that power can be disconnected.  I am using this with an outlet timer that turns off a bit after the cron shutdown runs.
 
 1. This adds a line to the crontab to shutodwn at `2:45 AM`: `(sudo crontab -l ; echo "45 2 * * * shutdown -h now") | sudo crontab -`
     * If you don't have a crontab for root yet, then you will get a message like `no crontab for root` which is fine.
 
+## Deploying a new server
+
+Though these instructions are detailed, the code has not been abstracted to where configuration lives outside the code, so deploying means changing (just a few) values in code.
+
+### Set up SMS phone number
+
+These instructions are for using Twilio, but it would not be too hard to change things around for another SMS service.
+
+1. Create an account at Twilio.
+1. Obtain a [phone number](https://www.twilio.com/user/account/phone-numbers) or use an existing one if you already have one set up.
+1. Under the settings for that phone number, set the Messaging POST value to `http://<YOUR_APP_NAME>.meteor.com/incoming`.
+1. There is no real set up for the web application part, but the application displays the phone number so you may want to update that.
+
+### Create web server
+
+The application is a [Meteor](http://www.meteor.com/) application, and to note, my first Meteor application.
+
+1. Install Meteor: `curl https://install.meteor.com | /bin/sh`
+1. (for development) Install Meteorite: `npm install -g meteorite`
+1. Run locally: `meteor`
+1. Deploy to Meteor.com: `meteor deploy <YOUR_APP_NAME>.meteor.com`
+
+### Create a node
+
+See above for deploying a node.  You will just have to change the URL so that it points at your new server, `<YOUR_APP_NAME>.meteor.com`.
