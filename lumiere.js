@@ -41,6 +41,10 @@ if (Meteor.isClient) {
 
   Template.lights.current = function() {
     var recent = Colors.find({}, { sort: { timestamp: -1 }, limit: 1 }).fetch()[0];
+
+    if (!_.isUndefined(recent)) {
+      recent.input = recent.input.split(',').join(', ');
+    }
     return sharedMethods.fillColor(recent);
   };
 
