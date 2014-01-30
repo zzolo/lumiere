@@ -1,61 +1,86 @@
 /**
- * Main application logic for Lumiere Meteor app.
+ * Main application logic for Lumiere Meteor app.  This
+ * holds the both server and client side code.
  */
 
-// Top level objects
-var LEDs = 32 * 5;
-var phone = '+1 651 400 1501';
-var lumiereName = 'Lumière';
+
+// We will use these later
 var chroma;
 
-// Collection for color data
+
+/**
+ * Persistant data stores
+ */
 var Colors = new Meteor.Collection('colors');
 
+
+/**
+ * Shared objects across client and server.
+ *
+ * Meteor.lumiere.colors comes in from colors.js
+ */
+Meteor.lumiere = Meteor.lumiere || {};
+Meteor.lumiere.LEDs = 32 * 5;
+Meteor.lumiere.phone = '+1 651 400 1501';
+Meteor.lumiere.lumiereName = 'Lumière';
+
 // Shared methods that should not be called async
-var sharedMethods = {
-  fillColor: function(color) {
-    var colors = [];
-    var i;
+Meteor.lumiere.fillColor = function(color) {
+  var colors = [];
+  var i;
 
-    if (!_.isUndefined(color) && _.isObject(color)) {
-      // Repeat colors
-      for (i = 0; i < LEDs; i++) {
-        colors.push(color.colors[i % color.colors.length]);
-      }
-
-      color.colors = colors;
+  if (!_.isUndefined(color) && _.isObject(color)) {
+    // Repeat colors
+    for (i = 0; i < Meteor.lumiere.LEDs; i++) {
+      colors.push(color.colors[i % color.colors.length]);
     }
-    return color;
+
+    color.colors = colors;
   }
+  return color;
 };
+
+
 
 /**
  * Client side only
  */
 if (Meteor.isClient) {
 
-  // Hook up template values
+  /**
+   * Template values.  Multiple templates are used
+   * as Meteor ends up rerendering everything when
+   * one value is updated and can be very slow.
+   */
+
+  // Status allows for a simple icon to show if the client
+  // is connected to the server
   Template.header.status = function() {
     return Meteor.status().status;
   };
 
+  // The current selection of lights
   Template.lights.current = function() {
     var recent = Colors.find({}, { sort: { timestamp: -1 }, limit: 1 }).fetch()[0];
 
     if (!_.isUndefined(recent)) {
       recent.input = recent.input.split(',').join(', ');
     }
-    return sharedMethods.fillColor(recent);
+    return Meteor.lumiere.fillColor(recent);
   };
 
+  // Phone saved here so that it can be managed in
+  // one place.
   Template.about.phone = function() {
-    return phone;
+    return Meteor.lumiere.phone;
   };
 
+  // All those colors!
   Template.input.colorList = function() {
     return Meteor.lumiere.colors;
   };
 
+  // Events handled in the input template.
   Template.input.events({
     'submit .color-input-form': function(e) {
       e.preventDefault();
@@ -86,11 +111,15 @@ if (Meteor.isClient) {
   });
 }
 
+
+
 /**
  * Server side only
  */
 if (Meteor.isServer) {
-  // Packages
+  /**
+   * Packages installed via meteroite and meteor-npm.
+   */
   chroma = Meteor.require('chroma-js');
 
   // On startup
@@ -167,7 +196,7 @@ if (Meteor.isServer) {
         };
       },
 
-      // Save colors
+      // Save colors to data-store
       saveColors: function(input, colors) {
         Colors.insert({
           timestamp: (new Date()).getTime(),
@@ -186,6 +215,13 @@ if (Meteor.isServer) {
       }
     });
   });
+
+
+
+  /**
+   * Routing for other parts of the application.
+   * mrt add router
+   */
 
   // Routing for text input.  Can test locally with something like:
   // curl --data "Body=blue" -X POST http://localhost:3000/incoming
@@ -222,7 +258,7 @@ if (Meteor.isServer) {
     return [
       200,
       { 'content-type': 'text/xml' },
-      '<?xml version="1.0" encoding="UTF-8" ?> <Response> <Sms>Thank you for your input; your color should show up in a few seconds.  - ' + lumiereName + '</Sms> </Response>'
+      '<?xml version="1.0" encoding="UTF-8" ?> <Response> <Sms>Thank you for your input; your color should show up in a few seconds.  - ' + Meteor.lumiere.lumiereName + '</Sms> </Response>'
     ];
   });
 

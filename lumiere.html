@@ -12,16 +12,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
+<!-- Main body output -->
 <body>
   <div class="app-container">
     {{> header}}
     {{> lights}}
+
     <div class="spacer"></div>
+
     {{> input}}
+
     <div class="spacer"></div>
+
     {{> about}}
+  </div>
 </body>
 
+
+<!-- Header template, contains status indicator -->
 <template name="header">
   <div class="header {{ status }}">
     <div class="status-indicator" title="Status: {{ status }}"></div>
@@ -30,6 +38,8 @@
   </div>
 </template>
 
+
+<!-- Lights template that shows the current light configuration -->
 <template name="lights">
   <div id="color-output-canvas" class="cf">
     {{#each current.colors }}
@@ -42,6 +52,8 @@
   </div>
 </template>
 
+
+<!-- Input template for input of colors -->
 <template name="input">
   <div class="color-input-container">
     <form class="color-input-form cf">
@@ -72,6 +84,8 @@
   </div>
 </template>
 
+
+<!-- About section that could be static except some minor config stuff -->
 <template name="about">
   <div class="about">
     <h3>About</h3>

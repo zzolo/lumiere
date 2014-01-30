@@ -4,6 +4,8 @@
  * Colors can be a string name or an array of chroma-compatible strings.
  *
  * Colors taken from Name that Color, Chroma, and ColorBrewer (via Chroma)
+ *
+ * Attaches to Meteor.lumiere.colors
  */
 var colors = {
   // Custom colors
